@@ -17,26 +17,32 @@ export function CtaSection({settings}: CtaSectionProps) {
 
   return (
     <section className="px-6 py-20">
-      <div className="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-white/[0.02] p-10 md:p-16">
-        <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-accent/20 bg-white/[0.02] p-10 shadow-[0_0_60px_rgba(34,211,238,0.08)] md:p-16">
+        <div
+          className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full opacity-30 blur-3xl"
+          style={{background: 'radial-gradient(circle, var(--accent-glow), transparent 70%)'}}
+        />
+        <h2 className="relative text-3xl font-semibold tracking-tight text-white md:text-4xl">
           {cta.title}
         </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/50">{cta.body}</p>
-        <div className="mt-8 flex flex-wrap gap-4">
+        <p className="relative mt-4 max-w-2xl text-base leading-relaxed text-white/50">
+          {cta.body}
+        </p>
+        <div className="relative mt-8 flex flex-wrap gap-4">
           <Link
             href={cta.primaryHref}
-            className="rounded-full bg-white px-6 py-3 font-mono text-xs uppercase tracking-widest text-black transition hover:bg-white/90"
+            className="rounded-full bg-accent px-6 py-3 font-mono text-xs uppercase tracking-widest text-black transition hover:bg-accent/90"
           >
             {cta.primaryLabel}
           </Link>
           <Link
             href={cta.secondaryHref}
-            className="rounded-full border border-white/20 px-6 py-3 font-mono text-xs uppercase tracking-widest text-white transition hover:border-white/50"
+            className="rounded-full border border-accent/40 px-6 py-3 font-mono text-xs uppercase tracking-widest text-accent transition hover:border-accent hover:bg-accent/10"
           >
             {cta.secondaryLabel}
           </Link>
         </div>
-        <p className="mt-6 font-mono text-xs text-white/30">
+        <p className="relative mt-6 font-mono text-xs text-white/30">
           Download buttons are placeholders until real files or external URLs are connected.
         </p>
       </div>

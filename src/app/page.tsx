@@ -23,13 +23,8 @@ export default async function HomePage() {
     <>
       <SiteHeader settings={settings} />
       <main className="flex-1">
-        <Hero settings={settings} />
-        <LibraryIndex
-          categories={categories}
-          resources={resources}
-          indexLabel={settings?.libraryIndexLabel}
-          indexStatus={settings?.libraryIndexStatus}
-        />
+        <Hero settings={settings} categories={categories} resources={resources} />
+        <LibraryIndex categories={categories} resources={resources} />
         {categories.map((category) => (
           <CategorySection
             key={category._id}

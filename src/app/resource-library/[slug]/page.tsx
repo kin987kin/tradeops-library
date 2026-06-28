@@ -43,7 +43,7 @@ export default async function ResourceDetailPage({params}: Props) {
         <article className="mx-auto max-w-3xl">
           <Link
             href={resource.category ? `/${resource.category.slug}` : '/'}
-            className="mb-8 inline-block font-mono text-xs uppercase tracking-widest text-white/40 transition hover:text-white"
+            className="mb-8 inline-block font-mono text-xs uppercase tracking-widest text-white/40 transition hover:text-accent"
           >
             ← Back to {resource.category?.title ?? 'library'}
           </Link>
@@ -60,7 +60,7 @@ export default async function ResourceDetailPage({params}: Props) {
             </div>
           )}
 
-          <span className="inline-flex rounded-full border border-white/15 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/50">
+          <span className="inline-flex rounded-full border border-accent/30 bg-accent/5 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-accent">
             {resource.resourceType}
           </span>
 

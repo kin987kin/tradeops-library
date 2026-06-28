@@ -17,11 +17,11 @@ export function DownloadButton({resource, className = ''}: DownloadButtonProps) 
       href={href}
       target={isPlaceholder ? undefined : '_blank'}
       rel={isPlaceholder ? undefined : 'noopener noreferrer'}
-      className={`inline-flex w-full items-center justify-center rounded-full border border-white/20 px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-white transition hover:border-white/50 hover:bg-white/5 ${className}`}
+      className={`inline-flex items-center font-mono text-xs uppercase tracking-widest text-accent transition hover:text-accent/80 ${className}`}
       onClick={isPlaceholder ? (e) => e.preventDefault() : undefined}
       aria-disabled={isPlaceholder}
     >
-      {label}
+      {label} →
     </a>
   )
 }

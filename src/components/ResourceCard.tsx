@@ -10,7 +10,7 @@ type ResourceCardProps = {
 
 export function ResourceCard({resource}: ResourceCardProps) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-white/20 hover:bg-white/[0.04]">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-accent/30 hover:bg-white/[0.04] hover:shadow-[0_0_24px_rgba(34,211,238,0.08)]">
       <Link href={`/resource-library/${resource.slug}`} className="flex flex-1 flex-col p-6">
         {resource.image && (
           <div className="relative mb-4 aspect-video overflow-hidden rounded-xl bg-white/5">
@@ -22,7 +22,7 @@ export function ResourceCard({resource}: ResourceCardProps) {
             />
           </div>
         )}
-        <span className="mb-3 inline-flex w-fit rounded-full border border-white/15 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/50">
+        <span className="mb-3 inline-flex w-fit rounded-full border border-accent/30 bg-accent/5 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-accent">
           {resource.resourceType}
         </span>
         <h3 className="text-xl font-semibold text-white">{resource.title}</h3>

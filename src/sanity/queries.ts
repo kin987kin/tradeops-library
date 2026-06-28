@@ -13,6 +13,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     libraryIndexStatus,
     ctaSection,
     footerText,
+    disclaimerText,
     navLinks
   }`)
 }

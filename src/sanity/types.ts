@@ -23,6 +23,7 @@ export type SiteSettings = {
     secondaryHref: string
   }
   footerText: string
+  disclaimerText?: string
   navLinks?: NavLink[]
 }
 

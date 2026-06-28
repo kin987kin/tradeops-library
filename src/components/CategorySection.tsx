@@ -18,7 +18,7 @@ export function CategorySection({category, resources}: CategorySectionProps) {
       <div className="mx-auto max-w-6xl">
         <div className="mb-10 grid gap-8 md:grid-cols-2 md:items-end">
           <div>
-            <p className="mb-2 font-mono text-xs uppercase tracking-[0.3em] text-white/40">
+            <p className="mb-2 font-mono text-xs uppercase tracking-[0.3em] text-accent/60">
               {category.title}
             </p>
             <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">
@@ -49,7 +49,7 @@ export function CategorySection({category, resources}: CategorySectionProps) {
         <div className="mt-8">
           <Link
             href={`/${category.slug}`}
-            className="font-mono text-xs uppercase tracking-widest text-white/40 transition hover:text-white"
+            className="font-mono text-xs uppercase tracking-widest text-accent/70 transition hover:text-accent"
           >
             View all {category.title.toLowerCase()} →
           </Link>
