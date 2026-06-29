@@ -1,7 +1,7 @@
 import {DisclaimerBanner} from './DisclaimerBanner'
 import {NewsletterSubscribe} from './NewsletterSubscribe'
 import type {SiteSettings} from '@/sanity/types'
-import {DEFAULT_NEWSLETTER} from '@/lib/newsletter'
+import {DEFAULT_NEWSLETTER} from '@/lib/newsletter-shared'
 
 type SiteFooterProps = {
   settings: SiteSettings | null

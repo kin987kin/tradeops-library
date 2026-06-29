@@ -1,5 +1,8 @@
 import {NextResponse} from 'next/server'
-import {subscribeToNewsletter, type NewsletterSource} from '@/lib/newsletter'
+import {subscribeToNewsletter} from '@/lib/newsletter-server'
+import type {NewsletterSource} from '@/lib/newsletter-shared'
+
+export const dynamic = 'force-dynamic'
 
 type SubscribeRequest = {
   email?: string

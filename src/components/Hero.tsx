@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type {Category, Resource, SiteSettings} from '@/sanity/types'
 import {urlFor} from '@/sanity/image'
-import {DEFAULT_NEWSLETTER} from '@/lib/newsletter'
+import {DEFAULT_NEWSLETTER} from '@/lib/newsletter-shared'
 import {LibraryIndexChart} from './LibraryIndexChart'
 import {NewsletterSubscribe} from './NewsletterSubscribe'
 

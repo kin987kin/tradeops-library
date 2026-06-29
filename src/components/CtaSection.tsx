@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type {SiteSettings} from '@/sanity/types'
-import {DEFAULT_NEWSLETTER} from '@/lib/newsletter'
+import {DEFAULT_NEWSLETTER} from '@/lib/newsletter-shared'
 import {NewsletterSubscribe} from './NewsletterSubscribe'
 
 type CtaSectionProps = {

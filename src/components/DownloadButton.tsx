@@ -3,7 +3,7 @@
 import {useState} from 'react'
 import type {Resource} from '@/sanity/types'
 import {DownloadGateModal} from './DownloadGateModal'
-import {DEFAULT_CONSENT_TEXT, isDownloadUnlocked, unlockDownload} from '@/lib/newsletter'
+import {DEFAULT_CONSENT_TEXT, isDownloadUnlocked, unlockDownload} from '@/lib/newsletter-shared'
 
 type DownloadButtonProps = {
   resource: Resource

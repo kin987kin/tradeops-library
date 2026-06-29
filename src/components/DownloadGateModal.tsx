@@ -2,7 +2,7 @@
 
 import {useEffect} from 'react'
 import {NewsletterSubscribe} from './NewsletterSubscribe'
-import {DEFAULT_CONSENT_TEXT} from '@/lib/newsletter'
+import {DEFAULT_CONSENT_TEXT} from '@/lib/newsletter-shared'
 
 type DownloadGateModalProps = {
   resourceTitle: string

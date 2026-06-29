@@ -1,8 +1,8 @@
 'use client'
 
 import {useState} from 'react'
-import type {NewsletterSource} from '@/lib/newsletter'
-import {DEFAULT_CONSENT_TEXT} from '@/lib/newsletter'
+import type {NewsletterSource} from '@/lib/newsletter-shared'
+import {DEFAULT_CONSENT_TEXT} from '@/lib/newsletter-shared'
 
 type NewsletterSubscribeProps = {
   title?: string
