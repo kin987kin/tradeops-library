@@ -1,8 +1,8 @@
 import {NextResponse} from 'next/server'
-import {subscribeToNewsletter} from '@/lib/newsletter-server'
 import type {NewsletterSource} from '@/lib/newsletter-shared'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 type SubscribeRequest = {
   email?: string
@@ -12,6 +12,13 @@ type SubscribeRequest = {
 }
 
 const VALID_SOURCES: NewsletterSource[] = ['hero', 'footer', 'cta', 'download-gate']
+
+const BUTTONDOWN_API = 'https://api.buttondown.com/v1/subscribers'
+
+function readButtondownApiKey() {
+  const key = process.env.BUTTONDOWN_API_KEY?.trim()
+  return key || undefined
+}
 
 export async function POST(request: Request) {
   let body: SubscribeRequest
@@ -27,16 +34,63 @@ export async function POST(request: Request) {
     return NextResponse.json({error: 'Invalid source.'}, {status: 400})
   }
 
-  const result = await subscribeToNewsletter({
-    email: body.email?.trim() ?? '',
-    consent: Boolean(body.consent),
-    source,
-    resourceSlug: body.resourceSlug?.trim() || undefined,
-  })
+  const email = body.email?.trim() ?? ''
+  const consent = Boolean(body.consent)
+  const resourceSlug = body.resourceSlug?.trim() || undefined
 
-  if (!result.ok) {
-    return NextResponse.json({error: result.error}, {status: 400})
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return NextResponse.json({error: 'Please enter a valid email address.'}, {status: 400})
   }
 
-  return NextResponse.json({ok: true})
+  if (!consent) {
+    return NextResponse.json({error: 'Please agree to receive email updates.'}, {status: 400})
+  }
+
+  const apiKey = readButtondownApiKey()
+  if (!apiKey) {
+    if (process.env.NODE_ENV === 'development') {
+      console.info('[newsletter] Dev mode — no BUTTONDOWN_API_KEY')
+      return NextResponse.json({ok: true})
+    }
+    return NextResponse.json(
+      {error: 'Newsletter signup is not configured yet. Please try again later.'},
+      {status: 400},
+    )
+  }
+
+  const tags = [`source:${source}`]
+  if (resourceSlug) {
+    tags.push(`download:${resourceSlug}`)
+  }
+
+  const response = await fetch(BUTTONDOWN_API, {
+    method: 'POST',
+    headers: {
+      Authorization: `Token ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email_address: email,
+      tags,
+      metadata: {
+        source,
+        resourceSlug: resourceSlug ?? null,
+        consentAt: new Date().toISOString(),
+      },
+    }),
+  })
+
+  if (response.ok) {
+    return NextResponse.json({ok: true})
+  }
+
+  const responseBody = (await response.json().catch(() => null)) as {detail?: string} | null
+  const detail = responseBody?.detail ?? ''
+
+  if (response.status === 409 || detail.toLowerCase().includes('already')) {
+    return NextResponse.json({ok: true})
+  }
+
+  console.error('[newsletter] Buttondown error:', response.status, detail)
+  return NextResponse.json({error: 'Could not subscribe right now. Please try again.'}, {status: 400})
 }
