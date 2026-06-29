@@ -1,3 +1,4 @@
+import {connection} from 'next/server'
 import {NextResponse} from 'next/server'
 import type {NewsletterSource} from '@/lib/newsletter-shared'
 
@@ -15,12 +16,23 @@ const VALID_SOURCES: NewsletterSource[] = ['hero', 'footer', 'cta', 'download-ga
 
 const BUTTONDOWN_API = 'https://api.buttondown.com/v1/subscribers'
 
-function readButtondownApiKey() {
-  const key = process.env.BUTTONDOWN_API_KEY?.trim()
-  return key || undefined
+/** Runtime-only read — avoids Turbopack inlining undefined for Sensitive env vars at build. */
+async function readButtondownApiKey() {
+  const {env} = await import('node:process')
+  const name = ['BUTTONDOWN', 'API', 'KEY'].join('_')
+  const value = env[name]
+  return typeof value === 'string' && value.trim() ? value.trim() : undefined
+}
+
+export async function GET() {
+  await connection()
+  const configured = Boolean(await readButtondownApiKey())
+  return NextResponse.json({configured})
 }
 
 export async function POST(request: Request) {
+  await connection()
+
   let body: SubscribeRequest
 
   try {
@@ -46,7 +58,7 @@ export async function POST(request: Request) {
     return NextResponse.json({error: 'Please agree to receive email updates.'}, {status: 400})
   }
 
-  const apiKey = readButtondownApiKey()
+  const apiKey = await readButtondownApiKey()
   if (!apiKey) {
     if (process.env.NODE_ENV === 'development') {
       console.info('[newsletter] Dev mode — no BUTTONDOWN_API_KEY')
