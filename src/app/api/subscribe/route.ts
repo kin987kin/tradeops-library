@@ -16,18 +16,65 @@ const VALID_SOURCES: NewsletterSource[] = ['hero', 'footer', 'cta', 'download-ga
 
 const BUTTONDOWN_API = 'https://api.buttondown.com/v1/subscribers'
 
+const EXPECTED_KEY = 'BUTTONDOWN_API_KEY'
+
 /** Runtime-only read — avoids Turbopack inlining undefined for Sensitive env vars at build. */
 async function readButtondownApiKey() {
   const {env} = await import('node:process')
-  const name = ['BUTTONDOWN', 'API', 'KEY'].join('_')
-  const value = env[name]
+  const value = env[EXPECTED_KEY]
   return typeof value === 'string' && value.trim() ? value.trim() : undefined
+}
+
+type KeyStatus = 'missing' | 'empty' | 'set'
+
+async function diagnoseButtondownEnv() {
+  const {env} = await import('node:process')
+
+  const typoCandidates = [
+    'BUTTONDOWN_API_KEY',
+    'buttondown_API_KEY',
+    'Buttondown_Api_Key',
+    'BUTTONDOWNBUTTONDOWN_API_KEY',
+  ]
+
+  const matchingEnvKeys = Object.keys(env)
+    .filter((key) => /buttondown/i.test(key))
+    .sort()
+
+  const candidateStatus: Record<string, KeyStatus> = {}
+  for (const name of typoCandidates) {
+    const raw = env[name]
+    if (raw === undefined) {
+      candidateStatus[name] = 'missing'
+    } else if (typeof raw !== 'string' || !raw.trim()) {
+      candidateStatus[name] = 'empty'
+    } else {
+      candidateStatus[name] = 'set'
+    }
+  }
+
+  const primary = env[EXPECTED_KEY]
+  const configured = typeof primary === 'string' && primary.trim().length > 0
+
+  return {
+    configured,
+    expectedKey: EXPECTED_KEY,
+    matchingEnvKeys,
+    candidateStatus,
+    valueLength: configured && typeof primary === 'string' ? primary.trim().length : 0,
+    hint: configured
+      ? 'API key is present — subscribe should work if Buttondown accepts the key.'
+      : matchingEnvKeys.length === 0
+        ? 'No BUTTONDOWN env keys found on this deployment. Add BUTTONDOWN_API_KEY in Vercel, then redeploy.'
+        : candidateStatus[EXPECTED_KEY] === 'empty'
+          ? 'BUTTONDOWN_API_KEY exists but is empty. Delete and re-add with your Buttondown key (do not Save Edit with a blank value).'
+          : 'BUTTONDOWN_API_KEY missing or wrong name — check exact spelling and casing in Vercel.',
+  }
 }
 
 export async function GET() {
   await connection()
-  const configured = Boolean(await readButtondownApiKey())
-  return NextResponse.json({configured})
+  return NextResponse.json(await diagnoseButtondownEnv())
 }
 
 export async function POST(request: Request) {
