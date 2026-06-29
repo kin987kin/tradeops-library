@@ -14,7 +14,7 @@ type SiteHeaderProps = {
 
 export function SiteHeader({settings}: SiteHeaderProps) {
   const navLinks = settings?.navLinks?.length ? settings.navLinks : defaultNav
-  const siteTitle = settings?.siteTitle ?? 'TradeOps Library'
+  const siteTitle = settings?.siteTitle ?? 'TradeOps'
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-md">

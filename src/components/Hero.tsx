@@ -14,10 +14,10 @@ type HeroProps = {
 
 export function Hero({settings, categories, resources}: HeroProps) {
   const title =
-    settings?.heroTitle ?? 'A trading resource library for bots, papers, and utilities'
+    settings?.heroTitle ?? 'Curated bots, research, and tools for serious traders'
   const subtitle =
     settings?.heroSubtitle ??
-    'Browse a curated library of trading bots, research papers, and practical utilities.'
+    'Browse MT5 EAs, research papers, and practical utilities — curated downloads, no fluff.'
   const primary = settings?.heroPrimaryCta ?? {label: 'Browse library', href: '/'}
   const secondary = settings?.heroSecondaryCta ?? {label: 'View papers', href: '/research'}
   const newsletter = settings?.newsletter ?? DEFAULT_NEWSLETTER

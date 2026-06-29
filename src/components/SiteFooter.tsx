@@ -8,7 +8,7 @@ type SiteFooterProps = {
 }
 
 export function SiteFooter({settings}: SiteFooterProps) {
-  const footerText = settings?.footerText ?? '© 2026 TradeOps Hub'
+  const footerText = settings?.footerText ?? '© 2026 TradeOps'
   const disclaimer = settings?.disclaimerText
   const newsletter = settings?.newsletter ?? DEFAULT_NEWSLETTER
   const showNewsletter = newsletter.showInFooter !== false

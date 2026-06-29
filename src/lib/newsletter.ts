@@ -8,7 +8,7 @@ export type SubscribePayload = {
 }
 
 export const DEFAULT_CONSENT_TEXT =
-  'I agree to receive emails about new trading resources and updates from TradeOps Library. I can unsubscribe at any time.'
+  'I agree to receive emails about new trading resources and updates from TradeOps. I can unsubscribe at any time.'
 
 export const DEFAULT_NEWSLETTER = {
   title: 'Stay updated',

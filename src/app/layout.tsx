@@ -14,11 +14,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'TradeOps Library',
-    template: '%s | TradeOps Library',
+    default: 'TradeOps',
+    template: '%s | TradeOps',
   },
   description:
-    'A trading resource library for bots, research papers, and utilities.',
+    'Curated MT5 bots, research, and utilities for serious traders.',
 }
 
 export default function RootLayout({
