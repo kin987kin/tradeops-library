@@ -33,7 +33,11 @@ export default async function DownloadsPage() {
           </p>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {resources.map((resource) => (
-              <ResourceCard key={resource._id} resource={resource} />
+              <ResourceCard
+                key={resource._id}
+                resource={resource}
+                consentText={settings?.newsletter?.consentText}
+              />
             ))}
           </div>
           {resources.length === 0 && (

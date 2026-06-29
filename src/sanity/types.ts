@@ -21,7 +21,17 @@ export type SiteSettings = {
     primaryHref: string
     secondaryLabel: string
     secondaryHref: string
+    showNewsletterForm?: boolean
   }
+  newsletter?: {
+    title: string
+    description: string
+    promise: string
+    consentText: string
+    showInHero?: boolean
+    showInFooter?: boolean
+  }
+  defaultDownloadGate?: 'none' | 'email'
   footerText: string
   disclaimerText?: string
   navLinks?: NavLink[]
@@ -47,6 +57,7 @@ export type Resource = {
   image?: {asset: {_ref: string}}
   body?: PortableTextBlock[]
   downloadLabel?: string
+  downloadGate?: 'none' | 'email'
   downloadFile?: {asset: {_ref: string; url?: string}}
   downloadUrl?: string
   featured?: boolean

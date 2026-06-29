@@ -1,6 +1,5 @@
 import {SiteHeader} from '@/components/SiteHeader'
 import {Hero} from '@/components/Hero'
-import {LibraryIndex} from '@/components/LibraryIndex'
 import {CategorySection} from '@/components/CategorySection'
 import {CtaSection} from '@/components/CtaSection'
 import {SiteFooter} from '@/components/SiteFooter'
@@ -24,12 +23,12 @@ export default async function HomePage() {
       <SiteHeader settings={settings} />
       <main className="flex-1">
         <Hero settings={settings} categories={categories} resources={resources} />
-        <LibraryIndex categories={categories} resources={resources} />
         {categories.map((category) => (
           <CategorySection
             key={category._id}
             category={category}
             resources={resources.filter((r) => r.category?.slug === category.slug)}
+            consentText={settings?.newsletter?.consentText}
           />
         ))}
         <CtaSection settings={settings} />

@@ -2,7 +2,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type {Category, Resource, SiteSettings} from '@/sanity/types'
 import {urlFor} from '@/sanity/image'
+import {DEFAULT_NEWSLETTER} from '@/lib/newsletter'
 import {LibraryIndexChart} from './LibraryIndexChart'
+import {NewsletterSubscribe} from './NewsletterSubscribe'
 
 type HeroProps = {
   settings: SiteSettings | null
@@ -18,6 +20,8 @@ export function Hero({settings, categories, resources}: HeroProps) {
     'Browse a curated library of trading bots, research papers, and practical utilities.'
   const primary = settings?.heroPrimaryCta ?? {label: 'Browse library', href: '/'}
   const secondary = settings?.heroSecondaryCta ?? {label: 'View papers', href: '/research'}
+  const newsletter = settings?.newsletter ?? DEFAULT_NEWSLETTER
+  const showNewsletter = newsletter.showInHero !== false
 
   return (
     <section className="relative overflow-hidden border-b border-white/10 px-6 py-16 md:py-24">
@@ -62,6 +66,17 @@ export function Hero({settings, categories, resources}: HeroProps) {
               {secondary.label}
             </Link>
           </div>
+          {showNewsletter && (
+            <div className="mt-10 max-w-md rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <NewsletterSubscribe
+                title={newsletter.title}
+                description={newsletter.description}
+                promise={newsletter.promise}
+                consentText={newsletter.consentText}
+                source="hero"
+              />
+            </div>
+          )}
         </div>
         <LibraryIndexChart
           categories={categories}

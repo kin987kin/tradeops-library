@@ -6,9 +6,10 @@ import {DownloadButton} from './DownloadButton'
 
 type ResourceCardProps = {
   resource: Resource
+  consentText?: string
 }
 
-export function ResourceCard({resource}: ResourceCardProps) {
+export function ResourceCard({resource, consentText}: ResourceCardProps) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-accent/30 hover:bg-white/[0.04] hover:shadow-[0_0_24px_rgba(34,211,238,0.08)]">
       <Link href={`/resource-library/${resource.slug}`} className="flex flex-1 flex-col p-6">
@@ -31,7 +32,7 @@ export function ResourceCard({resource}: ResourceCardProps) {
         </p>
       </Link>
       <div className="border-t border-white/10 p-4">
-        <DownloadButton resource={resource} />
+        <DownloadButton resource={resource} consentText={consentText} />
       </div>
     </article>
   )

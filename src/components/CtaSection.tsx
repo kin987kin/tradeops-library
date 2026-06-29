@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import type {SiteSettings} from '@/sanity/types'
+import {DEFAULT_NEWSLETTER} from '@/lib/newsletter'
+import {NewsletterSubscribe} from './NewsletterSubscribe'
 
 type CtaSectionProps = {
   settings: SiteSettings | null
@@ -7,13 +9,16 @@ type CtaSectionProps = {
 
 export function CtaSection({settings}: CtaSectionProps) {
   const cta = settings?.ctaSection ?? {
-    title: 'Ready to add your real files?',
-    body: 'Swap the sample resources for your bots, papers, and utilities, then connect each download button to the correct file or external URL.',
+    title: 'Get new bots, papers, and tools',
+    body: 'Subscribe for updates when we add new EAs, research, and utilities. No daily spam — just the library.',
     primaryLabel: 'Browse library',
     primaryHref: '/',
-    secondaryLabel: 'Add downloads',
+    secondaryLabel: 'View downloads',
     secondaryHref: '/downloads',
+    showNewsletterForm: true,
   }
+  const newsletter = settings?.newsletter ?? DEFAULT_NEWSLETTER
+  const showForm = cta.showNewsletterForm !== false
 
   return (
     <section className="px-6 py-20">
@@ -42,9 +47,17 @@ export function CtaSection({settings}: CtaSectionProps) {
             {cta.secondaryLabel}
           </Link>
         </div>
-        <p className="relative mt-6 font-mono text-xs text-white/30">
-          Download buttons are placeholders until real files or external URLs are connected.
-        </p>
+        {showForm && (
+          <div className="relative mt-10 max-w-lg border-t border-white/10 pt-8">
+            <NewsletterSubscribe
+              title={newsletter.title}
+              description={newsletter.promise}
+              consentText={newsletter.consentText}
+              source="cta"
+              compact
+            />
+          </div>
+        )}
       </div>
     </section>
   )

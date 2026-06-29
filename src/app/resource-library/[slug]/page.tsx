@@ -69,7 +69,10 @@ export default async function ResourceDetailPage({params}: Props) {
           </h1>
 
           <div className="mt-6 max-w-xs">
-            <DownloadButton resource={resource} />
+            <DownloadButton
+              resource={resource}
+              consentText={settings?.newsletter?.consentText}
+            />
           </div>
 
           <p className="mt-8 text-lg leading-relaxed text-white/60">

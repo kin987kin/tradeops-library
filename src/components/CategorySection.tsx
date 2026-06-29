@@ -7,9 +7,10 @@ import {ResourceCard} from './ResourceCard'
 type CategorySectionProps = {
   category: Category
   resources: Resource[]
+  consentText?: string
 }
 
-export function CategorySection({category, resources}: CategorySectionProps) {
+export function CategorySection({category, resources, consentText}: CategorySectionProps) {
   const sectionTitle = category.sectionTitle ?? category.title
   const sectionDescription = category.sectionDescription ?? category.pageIntro
 
@@ -43,7 +44,7 @@ export function CategorySection({category, resources}: CategorySectionProps) {
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {resources.map((resource) => (
-            <ResourceCard key={resource._id} resource={resource} />
+            <ResourceCard key={resource._id} resource={resource} consentText={consentText} />
           ))}
         </div>
         <div className="mt-8">
